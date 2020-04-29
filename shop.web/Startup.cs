@@ -30,6 +30,9 @@ namespace shop.web
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddTransient<SeedDb>();
+
+            services.AddScoped<IRepository, Repository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
