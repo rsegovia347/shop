@@ -1,4 +1,5 @@
-﻿using System;
+﻿using shop.web.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace shop.web.Data
 {
-	public class Product
+	public class Product: IEntity
 	{
 		public int Id { get; set; }
 
@@ -31,6 +32,6 @@ namespace shop.web.Data
 
 		[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
 		public double Stock { get; set; }
-
+		public User User { get; set; }
 	}
 }
