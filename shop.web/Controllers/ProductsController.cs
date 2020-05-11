@@ -2,17 +2,18 @@
 
 namespace shop.web.Controllers
 {
+    using Data;
+    using Helpers;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using shop.web.Models;
     using System;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using Data;
-    using Data.Entities;
-    using Helpers;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using shop.web.Models;
 
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
@@ -28,7 +29,7 @@ namespace shop.web.Controllers
         // GET: Products
         public IActionResult Index()
         {
-            return View(this.productRepository.GetAll().OrderBy(p=>p.Name));
+            return View(this.productRepository.GetAll().OrderBy(p => p.Name));
         }
 
         // GET: Products/Details/5
@@ -59,7 +60,7 @@ namespace shop.web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel view)
         {
-           
+
             if (ModelState.IsValid)
             {
                 var path = string.Empty;
@@ -82,8 +83,7 @@ namespace shop.web.Controllers
                     path = $"~/images/Products/{file}";
                 }
                 var product = this.ToProduct(view, path);
-                // TODO: Pending to change to: this.User.Identity.Name
-                product.User = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
+                product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await this.productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -139,7 +139,7 @@ namespace shop.web.Controllers
                 Price = product.Price,
                 Stock = product.Stock,
                 User = product.User
-                
+
             };
         }
 
@@ -172,8 +172,8 @@ namespace shop.web.Controllers
                         path = $"~/images/Products/{file}";
                     }
                     var product = this.ToProduct(view, path);
-                    // TODO: Pending to change to: this.User.Identity.Name
-                    product.User = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
+
+                    product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                     await this.productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
