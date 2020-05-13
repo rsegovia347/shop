@@ -13,7 +13,7 @@ namespace shop.web.Controllers
     using System.Linq;
     using System.Threading.Tasks;
 
-    [Authorize]
+
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
@@ -50,6 +50,7 @@ namespace shop.web.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -109,6 +110,7 @@ namespace shop.web.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -194,6 +196,7 @@ namespace shop.web.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

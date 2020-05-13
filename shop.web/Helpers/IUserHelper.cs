@@ -6,6 +6,7 @@ namespace shop.web.Helpers
     using Data.Entities;
     using Models;
     using System.Threading.Tasks;
+
     public interface IUserHelper
     {
         Task<User> GetUserByEmailAsync(string email);
@@ -18,6 +19,10 @@ namespace shop.web.Helpers
         Task<IdentityResult> UpdateUserAsync(User user);
 
         Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
+        Task<SignInResult> ValidatePasswordAsync(User user, string password);
+        Task CheckRoleAsync(string roleName);
+        Task AddUserToRoleAsync(User user, string roleName);
+        Task <bool> IsUserInRoleAsync(User user, string roleName);
     }
 
 }
