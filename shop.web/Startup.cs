@@ -43,7 +43,7 @@ namespace shop.web
             services.AddAuthentication()
              .AddCookie()
           .AddJwtBearer(cfg =>
-            {   
+            {
                 cfg.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidIssuer = this.Configuration["Tokens:Issuer"],
@@ -71,6 +71,12 @@ namespace shop.web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -87,7 +93,7 @@ namespace shop.web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
