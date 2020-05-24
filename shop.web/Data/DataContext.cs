@@ -11,6 +11,9 @@
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Country> countries{ get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderDetail> OrderDetails { get; set; }

@@ -6,6 +6,7 @@ namespace shop.web.Data
     using shop.web.Data.Entities;
     using shop.web.Helpers;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     public class SeedDb
@@ -27,6 +28,22 @@ namespace shop.web.Data
             await this.userHelper.CheckRoleAsync("Admin");
             await this.userHelper.CheckRoleAsync("Customer");
 
+            if (!this.context.countries.Any())
+            {
+                var cities = new List<City>();
+                cities.Add(new City { Name = "Medellín" });
+                cities.Add(new City { Name = "Bogotá" });
+                cities.Add(new City { Name = "Calí" });
+
+                this.context.countries.Add(new Country
+                {
+                    Cities = cities,
+                    Name = "Colombia"
+                });
+
+                await this.context.SaveChangesAsync();
+            }
+
             //add users
             var user = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
             if (user == null)
@@ -37,7 +54,10 @@ namespace shop.web.Data
                     LastName = "Zuluaga",
                     Email = "jzuluaga55@gmail.com",
                     UserName = "jzuluaga55@gmail.com",
-                    PhoneNumber = "67983300"
+                    PhoneNumber = "67983300",
+                        Address = "Calle Luna Calle Sol",
+                    CityId = this.context.countries.FirstOrDefault().Cities.FirstOrDefault().Id,
+                    City = this.context.countries.FirstOrDefault().Cities.FirstOrDefault()
                 };
 
                 var result = await this.userHelper.AddUserAsync(user, "123456");

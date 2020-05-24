@@ -1,12 +1,24 @@
-﻿using shop.web.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace shop.web.Data
+﻿namespace shop.web.Data
 {
-    public interface ICountryRepository : IGenericRepository<Country>
-    {
-    }
+	using Entities;
+	using Models;
+	using System.Linq;
+	using System.Threading.Tasks;
+
+	public interface ICountryRepository : IGenericRepository<Country>
+	{
+		IQueryable GetCountriesWithCities();
+
+		Task<Country> GetCountryWithCitiesAsync(int id);
+
+		Task<City> GetCityAsync(int id);
+
+		Task AddCityAsync(CityViewModel model);
+
+		Task<int> UpdateCityAsync(City city);
+
+		Task<int> DeleteCityAsync(City city);
+	}
+
+
 }
