@@ -8,6 +8,7 @@ namespace shop.UIForms.ViewModels
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Xamarin.Forms;
+    
 
     public class ProductsViewModel: BaseViewModel
     {
@@ -35,11 +36,15 @@ namespace shop.UIForms.ViewModels
         private async void LoadProducts()
         {
             this.IsRefreshing = true;
+            var url = Application.Current.Resources["UrlAPI"].ToString();
             var response = await this.apiService.GetListAsync<Product>(
-                "https://shopsole.azurewebsites.net",
+                url,
                 "/api",
-                "/Products");
-            this.IsRefreshing = false;
+                "/Products",
+                "bearer",
+                MainViewModel.GetInstance().Token.Token);
+
+           
             if (!response.IsSuccess)
             {
                 await Application.Current.MainPage.DisplayAlert(
@@ -51,6 +56,7 @@ namespace shop.UIForms.ViewModels
 
             var myProducts = (List<Product>)response.Result;
             this.Products = new ObservableCollection<Product>(myProducts);
+            this.IsRefreshing = false;
         }
     }
 }

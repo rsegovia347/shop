@@ -4,8 +4,11 @@ namespace shop.web.Helpers
 {
 	using Data.Entities;
 	using Microsoft.AspNetCore.Identity;
-	using shop.web.Models;
-	using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using shop.web.Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
 	public class UserHelper : IUserHelper
 	{
@@ -117,6 +120,24 @@ namespace shop.web.Helpers
 			return await this.userManager.ResetPasswordAsync(user, token, password);
 		}
 
+		public async Task<List<User>> GetAllUsersAsync()
+		{
+			return await this.userManager.Users
+				.Include(u => u.City)
+				.OrderBy(u => u.FirstName)
+				.ThenBy(u => u.LastName)
+				.ToListAsync();
+		}
+
+		public async Task RemoveUserFromRoleAsync(User user, string roleName)
+		{
+			await this.userManager.RemoveFromRoleAsync(user, roleName);
+		}
+
+		public async Task DeleteUserAsync(User user)
+		{
+			await this.userManager.DeleteAsync(user);
+		}
 
 
 	}

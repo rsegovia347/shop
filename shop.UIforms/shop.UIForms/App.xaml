@@ -7,10 +7,14 @@
              mc:Ignorable="d"
              x:Class="shop.UIForms.App">
     <Application.Resources>
+        
         <ResourceDictionary>
             <!--locator-->
             <infra:InstanceLocator x:Key="Locator"/>
         </ResourceDictionary>
+
+        <!-- Parameters -->
+        <x:String x:Key="UrlAPI">https://shopsole.azurewebsites.net</x:String>
 
     </Application.Resources>
 </Application>
