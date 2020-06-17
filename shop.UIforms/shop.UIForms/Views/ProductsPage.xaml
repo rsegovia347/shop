@@ -7,6 +7,11 @@
              x:Class="shop.UIForms.Views.ProductPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Products">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_action_add_circle" Command="{Binding AddProductCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding Products}" Padding="8">

@@ -7,6 +7,7 @@ namespace shop.UIForms.ViewModels
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using Xamarin.Forms;
     
 
@@ -55,7 +56,8 @@ namespace shop.UIForms.ViewModels
             }
 
             var myProducts = (List<Product>)response.Result;
-            this.Products = new ObservableCollection<Product>(myProducts);
+            this.Products = new ObservableCollection<Product>(myProducts.OrderBy(p => p.Name));
+
             this.IsRefreshing = false;
         }
     }

@@ -85,6 +85,8 @@ namespace shop.UIForms.ViewModels
 
             var token = (TokenResponse)response.Result;
             var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.UserEmail = this.Email;
+            mainViewModel.UserPassword = this.Password;
             mainViewModel.Token = token;
             mainViewModel.Products = new ProductsViewModel();
             Application.Current.MainPage = new MasterPage();
