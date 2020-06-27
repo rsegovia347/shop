@@ -43,20 +43,23 @@
         {
             if (string.IsNullOrEmpty(this.Name))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "You must enter a product name.", "Accept");
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error", "You must enter a product name.", "Accept");
                 return;
             }
 
             if (string.IsNullOrEmpty(this.Price))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "You must enter a product price.", "Accept");
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error", "You must enter a product price.", "Accept");
                 return;
             }
 
             var price = decimal.Parse(this.Price);
             if (price <= 0)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "The price must be a number greather than zero.", "Accept");
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error", "The price must be a number greather than zero.", "Accept");
                 return;
             }
 
@@ -88,7 +91,7 @@
             }
 
             var newProduct = (Product)response.Result;
-            MainViewModel.GetInstance().Products.Products.Add(newProduct);
+            MainViewModel.GetInstance().Products.AddProductToList(newProduct);
 
             this.IsRunning = false;
             this.IsEnabled = true;
