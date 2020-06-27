@@ -40,5 +40,7 @@ namespace shop.Common.Models
         {
             return $"{this.Name}{this.Price:C2}";
         }
+
+        public byte[] ImageArray { get; set; }
     }
 }
